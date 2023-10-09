@@ -13,7 +13,7 @@ mongoose.connect('mongodb://127.0.0.1:27017/urlShortener', {
 })
 .then(()=>console.log('connected'))
 
-app.get("/getLinks", async (req, res) => {
+app.get("/api/getLinks", async (req, res) => {
   const authHeader = req.headers.authorization;
 
   if (!authHeader) {
@@ -21,14 +21,30 @@ app.get("/getLinks", async (req, res) => {
   }
 
   const authToken = authHeader.split(' ')[1];
-  console.log(authToken);
-
-  const shortUrl = await ShortUrl.findOne({ user: authToken })
-
+  
+  const urls = await ShortUrl.find({ user: authToken });
+  console.log(urls)
+  return res.json(urls);
 });
 
-app.get("/", (req, res) => {
-  res.json({ message: "Hello from server!" });
+app.post("/api/createLink", async (req, res) => {
+  const authHeader = req.headers.authorization;
+
+  if (!authHeader) {
+    return res.sendStatus(401);
+  }
+
+  const authToken = authHeader.split(' ')[1];
+
+  await ShortUrl.create({ full: req.body.fullUrl, user: authToken });
+
+  const shortUrl = await ShortUrl.findOne({full: req.body.fullUrl, user: authToken});
+  
+  return res.json({ fullUrl: shortUrl.full, shortUrl: shortUrl.short });
+})
+
+app.get("/api", (req, res) => {
+  res.json({ message: "It's Working!" });
 });
 
 process.on('uncaughtException', function (err) {

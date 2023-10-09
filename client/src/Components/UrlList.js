@@ -5,11 +5,10 @@ const cookies = new Cookies()
 
 export const UrlList = () => {
 
-    const [data, setData] = useState();
+    const [jsonData, setJsonData] = useState();
 
     useEffect( () => {
         async function fetchData() {
-        console.log(cookies.get("auth-token"));
         await fetch("/api/getLinks", {
             method: "GET",
             headers: new Headers({
@@ -18,13 +17,15 @@ export const UrlList = () => {
             })
         })
             .then((res) => res.json())
-            .then((data) => setData(data.links));
+            .then((data) => setJsonData(data));
         }
         fetchData();
     }, []);
 
-    return (<div className="url-list">
-        <h1>There is something There</h1>
-        {data}
-    </div>)
+    //fix it
+    return (
+    <div className="url-list">
+
+    </div>
+    );
 }
