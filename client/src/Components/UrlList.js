@@ -22,10 +22,13 @@ export const UrlList = () => {
         fetchData();
     }, []);
 
-    //fix it
+    const listItems = jsonData.map(jsonData => 
+        <li>{jsonData}</li>
+    );
+
     return (
     <div className="url-list">
-
+        <ul>{listItems}</ul>
     </div>
     );
 }
