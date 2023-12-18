@@ -30,9 +30,7 @@ app.get("/api/getLinks", async (req, res) => {
 app.post("/api/createLink", async (req, res) => {
   const authHeader = req.headers.authorization;
 
-  if (!authHeader) {
-    return res.sendStatus(401);
-  }
+  
 
   const authToken = authHeader.split(' ')[1];
 

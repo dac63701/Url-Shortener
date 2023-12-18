@@ -9,15 +9,14 @@ export const UrlList = () => {
 
     useEffect( () => {
         async function fetchData() {
-        await fetch("/api/getLinks", {
-            method: "GET",
-            headers: new Headers({
-            "Authorization": "Bearer " + cookies.get("auth-token"),
-            "Content-Type": "application/json"
-            })
+            await fetch("/api/getLinks", {
+                method: "GET",
+                headers: new Headers({
+                    "Authorization": "Bearer " + cookies.get("auth-token"),
+                    "Content-Type": "application/json"
+                })
         })
-            .then((res) => res.json())
-            .then((data) => setJsonData(data));
+            .then((res) => setJsonData(res.json));
         }
         fetchData();
     }, []);
