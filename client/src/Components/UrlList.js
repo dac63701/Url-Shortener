@@ -19,9 +19,9 @@ export const UrlList = () => {
             .then((res) => setJsonData(res.json));
         }
         fetchData();
-    }, []);
+    }, [jsonData]);
 
-    const listItems = jsonData.map(jsonData => 
+    var listItems = jsonData.map(jsonData => 
         <li>{jsonData}</li>
     );
 
